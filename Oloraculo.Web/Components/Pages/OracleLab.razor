@@ -15,23 +15,43 @@
     <MudPaper Class="surface-card" Elevation="0">
         <MudGrid Spacing="2" Class="control-grid">
             <MudItem xs="12" md="5">
-                <MudSelect T="string" Label="Equipo A" @bind-Value="_homeId" Dense="true" Disabled="@_busy" Variant="Variant.Outlined">
-                    @foreach (var team in _teams)
-                    {
-                        <MudSelectItem T="string" Value="@team.Id"><TeamLabel TeamId="@team.Id" Name="@team.Name" Compact="true" /></MudSelectItem>
-                    }
-                </MudSelect>
+                <MudAutocomplete T="Team"
+                                 Label="Equipo A"
+                                 Value="_homeTeam"
+                                 ValueChanged="OnHomeTeamChanged"
+                                 SearchFunc="SearchTeams"
+                                 ToStringFunc="TeamName"
+                                 Dense="true"
+                                 Disabled="@_busy"
+                                 Variant="Variant.Outlined"
+                                 ResetValueOnEmptyText="false"
+                                 CoerceText="false"
+                                 MaxItems="20">
+                    <ItemTemplate>
+                        <TeamLabel TeamId="@context.Id" Name="@context.Name" Compact="true" />
+                    </ItemTemplate>
+                </MudAutocomplete>
             </MudItem>
             <MudItem xs="12" md="5">
-                <MudSelect T="string" Label="Equipo B" @bind-Value="_awayId" Dense="true" Disabled="@_busy" Variant="Variant.Outlined">
-                    @foreach (var team in _teams)
-                    {
-                        <MudSelectItem T="string" Value="@team.Id"><TeamLabel TeamId="@team.Id" Name="@team.Name" Compact="true" /></MudSelectItem>
-                    }
-                </MudSelect>
+                <MudAutocomplete T="Team"
+                                 Label="Equipo B"
+                                 Value="_awayTeam"
+                                 ValueChanged="OnAwayTeamChanged"
+                                 SearchFunc="SearchTeams"
+                                 ToStringFunc="TeamName"
+                                 Dense="true"
+                                 Disabled="@_busy"
+                                 Variant="Variant.Outlined"
+                                 ResetValueOnEmptyText="false"
+                                 CoerceText="false"
+                                 MaxItems="20">
+                    <ItemTemplate>
+                        <TeamLabel TeamId="@context.Id" Name="@context.Name" Compact="true" />
+                    </ItemTemplate>
+                </MudAutocomplete>
             </MudItem>
             <MudItem xs="12" md="2" Class="action-cell">
-                <BusyButton Text="Predecir" BusyText="Prediciendo" IsBusy="_busy" Disabled="@(_homeId is null || _awayId is null || _homeId == _awayId)" Icon="@Icons.Material.Filled.AutoAwesome" OnClick="Predict" />
+                <BusyButton Text="Predecir" BusyText="Prediciendo" IsBusy="_busy" Disabled="@(_homeTeam is null || _awayTeam is null || _homeTeam.Id == _awayTeam.Id)" Icon="@Icons.Material.Filled.AutoAwesome" OnClick="Predict" />
             </MudItem>
         </MudGrid>
         @if (_busy)
@@ -80,8 +100,8 @@
 
 @code {
     private List<Team> _teams = [];
-    private string? _homeId;
-    private string? _awayId;
+    private Team? _homeTeam;
+    private Team? _awayTeam;
     private bool _busy;
     private string _error = "";
     private MatchPredictionResult? _result;
@@ -89,20 +109,20 @@
     protected override async Task OnInitializedAsync()
     {
         _teams = await Db.Teams.OrderBy(t => t.Name).ToListAsync();
-        _homeId = _teams.FirstOrDefault()?.Id;
-        _awayId = _teams.Skip(1).FirstOrDefault()?.Id;
+        _homeTeam = _teams.FirstOrDefault();
+        _awayTeam = _teams.Skip(1).FirstOrDefault();
     }
 
     private async Task Predict()
     {
-        if (_homeId is null || _awayId is null || _homeId == _awayId)
+        if (_homeTeam is null || _awayTeam is null || _homeTeam.Id == _awayTeam.Id)
             return;
 
         _busy = true;
         _error = "";
         try
         {
-            _result = await Predictor.PredictPairAsync(_homeId, _awayId);
+            _result = await Predictor.PredictPairAsync(_homeTeam.Id, _awayTeam.Id);
             Snackbar.Add("Predicción completa.", Severity.Success);
         }
         catch (Exception ex)
@@ -114,5 +134,30 @@
         {
             _busy = false;
         }
+    }
+
+    private Task<IEnumerable<Team>> SearchTeams(string? value, CancellationToken cancellationToken)
+    {
+        var query = value?.Trim();
+        var matches = string.IsNullOrWhiteSpace(query)
+            ? _teams
+            : _teams.Where(team =>
+                team.Name.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                team.Id.Contains(query, StringComparison.OrdinalIgnoreCase));
+
+        return Task.FromResult(matches.Take(20));
+    }
+
+    private static string TeamName(Team? team) => team?.Name ?? "";
+    private Task OnHomeTeamChanged(Team? team)
+    {
+        _homeTeam = team;
+        return Task.CompletedTask;
+    }
+
+    private Task OnAwayTeamChanged(Team? team)
+    {
+        _awayTeam = team;
+        return Task.CompletedTask;
     }
 }

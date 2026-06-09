@@ -52,6 +52,14 @@ public class CoreTests
     [InlineData("cape-verde", "Cape Verde", "cv")]
     [InlineData("england", "England", "gb-eng")]
     [InlineData("scotland", "Scotland", "gb-sct")]
+    [InlineData("wales", "Wales", "gb-wls")]
+    [InlineData("northern-ireland", "Northern Ireland", "gb-nir")]
+    [InlineData("china-pr", "China PR", "cn")]
+    [InlineData("chinese-taipei", "Chinese Taipei", "tw")]
+    [InlineData("korea-dpr", "Korea DPR", "kp")]
+    [InlineData("republic-of-ireland", "Republic of Ireland", "ie")]
+    [InlineData("palestine", "Palestine", "ps")]
+    [InlineData("faroe-islands", "Faroe Islands", "fo")]
     public void TeamFlagCatalog_ResolvesStandardAndFootballTeamNames(string id, string name, string expected)
     {
         Assert.Equal(expected, TeamFlagCatalog.CodeFor(id, name));
