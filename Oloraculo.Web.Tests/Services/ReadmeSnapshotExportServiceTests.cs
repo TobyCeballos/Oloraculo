@@ -204,10 +204,72 @@ public class ReadmeSnapshotExportServiceTests : TestFixtures
             Names(),
             DateTimeOffset.Parse("2026-01-02T00:00:00Z"));
 
+        Assert.Contains("| Match | Status | Result / Pick | Why | H | D | A |", rendered);
         Assert.Contains("| <img", rendered);
         Assert.Contains("1-0", rendered);
         Assert.Contains("60", rendered);
         Assert.Contains("%", rendered);
+    }
+
+    [Fact]
+    public void ReadmeExporter_RendersPredictionRationaleModelAndSignals()
+    {
+        var rendered = ReadmeSnapshotExportService.RenderSnapshotBlock(
+            TournamentProjection("hash", 100, DateTimeOffset.Parse("2026-01-01T00:00:00Z")),
+            [
+                PredictionResult(
+                    UnplayedFixture(),
+                    sources: [new SourceMetadata("model ladder", "derived", Notes: "Goles + contexto reciente")],
+                    featuresUsed: ["Modelo de goles", "Disponibilidad de jugadores"],
+                    drivers: ["Aplicó una calibración Elo/FIFA de 15 % hacia empate."])
+            ],
+            Names(),
+            DateTimeOffset.Parse("2026-01-02T00:00:00Z"));
+
+        Assert.Contains("Model: Oraculo final (Goles + contexto reciente)", rendered);
+        Assert.Contains("Signals: Modelo de goles, Disponibilidad de jugadores", rendered);
+        Assert.Contains("Elo/FIFA", rendered);
+    }
+
+    [Fact]
+    public void ReadmeExporter_RendersOnlyImpactfulAvailabilityClaims()
+    {
+        var fixture = UnplayedFixture();
+        var rendered = ReadmeSnapshotExportService.RenderSnapshotBlock(
+            TournamentProjection("hash", 100, DateTimeOffset.Parse("2026-01-01T00:00:00Z")),
+            [PredictionResult(fixture)],
+            Names(),
+            DateTimeOffset.Parse("2026-01-02T00:00:00Z"),
+            new Dictionary<string, IReadOnlyList<AvailabilityClaim>>
+            {
+                [fixture.Id] =
+                [
+                    AvailabilityClaim("Moise Bombito", "argentina", "Argentina", AvailabilityClaimStatus.ConfirmedOutInjury, affectsPrediction: true),
+                    AvailabilityClaim("Available Player", "france", "France", AvailabilityClaimStatus.Available, affectsPrediction: false)
+                ]
+            });
+
+        Assert.Contains("Bajas: Argentina: Moise Bombito (injury)", rendered);
+        Assert.DoesNotContain("Available Player", rendered);
+    }
+
+    [Fact]
+    public void ReadmeExporter_SanitizesRationaleTableCells()
+    {
+        var rendered = ReadmeSnapshotExportService.RenderSnapshotBlock(
+            TournamentProjection("hash", 100, DateTimeOffset.Parse("2026-01-01T00:00:00Z")),
+            [
+                PredictionResult(
+                    UnplayedFixture(),
+                    featuresUsed: ["line | pipe", "spaced\r\nvalue <tag>"],
+                    missing: ["odds | market"])
+            ],
+            Names(),
+            DateTimeOffset.Parse("2026-01-02T00:00:00Z"));
+
+        Assert.Contains("line &#124; pipe", rendered);
+        Assert.Contains("spaced value &lt;tag&gt;", rendered);
+        Assert.Contains("odds &#124; market", rendered);
     }
 
     private static TournamentProjection TournamentProjection(string hash, int simulations, DateTimeOffset generatedAt) => new()
@@ -258,7 +320,12 @@ public class ReadmeSnapshotExportServiceTests : TestFixtures
         AwayTeamId = "france"
     };
 
-    private static MatchPredictionResult PredictionResult(Fixture fixture) => new()
+    private static MatchPredictionResult PredictionResult(
+        Fixture fixture,
+        IReadOnlyList<SourceMetadata>? sources = null,
+        IReadOnlyList<string>? featuresUsed = null,
+        IReadOnlyList<string>? drivers = null,
+        IReadOnlyList<string>? missing = null) => new()
     {
         Fixture = fixture,
         HomeTeamName = "Argentina",
@@ -272,8 +339,28 @@ public class ReadmeSnapshotExportServiceTests : TestFixtures
             PredictorPriority = 5,
             Outcome = new OutcomeProbabilities(.6, .25, .15),
             MostLikelyScore = (1, 0),
-            Explanation = "test"
+            Explanation = "test",
+            Sources = sources ?? [],
+            FeaturesUsed = featuresUsed ?? [],
+            Drivers = drivers ?? [],
+            FeaturesMissing = missing ?? []
         }
+    };
+
+    private static AvailabilityClaim AvailabilityClaim(
+        string player,
+        string teamId,
+        string teamName,
+        AvailabilityClaimStatus status,
+        bool affectsPrediction) => new()
+    {
+        Player = player,
+        PlayerKey = player.ToLowerInvariant().Replace(" ", "-"),
+        TeamId = teamId,
+        TeamName = teamName,
+        Status = status,
+        SourceUrl = "https://example.test/source",
+        AffectsPrediction = affectsPrediction
     };
 
 }

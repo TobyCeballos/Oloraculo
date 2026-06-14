@@ -84,8 +84,9 @@ namespace Oloraculo.Web.Services
 
             var projection = await _simulation.RunAsync(saveSnapshot: true, ct: ct);
             var names = await _db.Teams.AsNoTracking().ToDictionaryAsync(t => t.Id, t => t.Name, ct);
+            var availabilityClaims = await AvailabilityClaimsByFixtureAsync(orderedFixtures, ct);
 
-            var block = RenderSnapshotBlock(projection, predictions, names, DateTimeOffset.UtcNow);
+            var block = RenderSnapshotBlock(projection, predictions, names, DateTimeOffset.UtcNow, availabilityClaims);
             var readmePath = Path.Combine(RepositoryRoot(), "README.md");
             var existing = File.Exists(readmePath) ? await File.ReadAllTextAsync(readmePath, ct) : "# Oloraculo";
             var updated = ReplaceSnapshotBlock(existing, block);
@@ -139,7 +140,8 @@ namespace Oloraculo.Web.Services
             TournamentProjection projection,
             IReadOnlyList<MatchPredictionResult> predictions,
             IReadOnlyDictionary<string, string> teamNames,
-            DateTimeOffset generatedAt)
+            DateTimeOffset generatedAt,
+            IReadOnlyDictionary<string, IReadOnlyList<AvailabilityClaim>>? availabilityClaimsByFixture = null)
         {
             var builder = new StringBuilder();
             builder.AppendLine("## Predicciones más recientes");
@@ -167,8 +169,8 @@ namespace Oloraculo.Web.Services
                 builder.AppendLine("<details open>");
                 builder.AppendLine($"<summary><strong>Group {Escape(group.Key)}</strong></summary>");
                 builder.AppendLine();
-                builder.AppendLine("| Match | Status | Result / Pick | H | D | A |");
-                builder.AppendLine("| --- | --- | --- | ---: | ---: | ---: |");
+                builder.AppendLine("| Match | Status | Result / Pick | Why | H | D | A |");
+                builder.AppendLine("| --- | --- | --- | --- | ---: | ---: | ---: |");
                 foreach (var result in OrderedPredictions(group))
                 {
                     var fixture = result.Fixture;
@@ -177,7 +179,8 @@ namespace Oloraculo.Web.Services
                     var away = TeamCell(fixture.AwayTeamId, result.AwayTeamName);
                     var status = StatusText(fixture);
                     var pick = ResultOrPickText(fixture, prediction);
-                    builder.AppendLine($"| {home} vs {away} | {status} | {pick} | {Percent(prediction.Outcome.HomeWin, 0)} | {Percent(prediction.Outcome.Draw, 0)} | {Percent(prediction.Outcome.AwayWin, 0)} |");
+                    var rationale = RationaleText(prediction, fixture.Id, availabilityClaimsByFixture);
+                    builder.AppendLine($"| {home} vs {away} | {status} | {pick} | {rationale} | {Percent(prediction.Outcome.HomeWin, 0)} | {Percent(prediction.Outcome.Draw, 0)} | {Percent(prediction.Outcome.AwayWin, 0)} |");
                 }
 
                 builder.AppendLine();
@@ -208,6 +211,38 @@ namespace Oloraculo.Web.Services
                 _logger.LogInformation("{Label}: {Note}", label, note);
             foreach (var error in errors)
                 _logger.LogWarning("{Label}: {Error}", label, error);
+        }
+
+        private async Task<IReadOnlyDictionary<string, IReadOnlyList<AvailabilityClaim>>> AvailabilityClaimsByFixtureAsync(
+            IEnumerable<Fixture> fixtures,
+            CancellationToken ct)
+        {
+            var fixtureList = fixtures.ToList();
+            var claimsByFixture = new Dictionary<string, IReadOnlyList<AvailabilityClaim>>(StringComparer.Ordinal);
+            if (fixtureList.Count == 0)
+                return claimsByFixture;
+
+            var teamIds = fixtureList
+                .SelectMany(fixture => new[] { fixture.HomeTeamId, fixture.AwayTeamId })
+                .Distinct(StringComparer.Ordinal)
+                .ToList();
+            var claims = await _db.AvailabilityClaims.AsNoTracking()
+                .Where(claim => claim.AffectsPrediction && teamIds.Contains(claim.TeamId))
+                .ToListAsync(ct);
+
+            foreach (var fixture in fixtureList)
+            {
+                var fixtureClaims = claims
+                    .Where(claim => claim.TeamId == fixture.HomeTeamId || claim.TeamId == fixture.AwayTeamId)
+                    .OrderBy(AvailabilitySort)
+                    .ThenBy(claim => claim.TeamName)
+                    .ThenBy(claim => claim.Player)
+                    .ToList();
+                if (fixtureClaims.Count > 0)
+                    claimsByFixture[fixture.Id] = fixtureClaims;
+            }
+
+            return claimsByFixture;
         }
 
         private static IEnumerable<Fixture> OrderedFixtures(IEnumerable<Fixture> fixtures) =>
@@ -246,6 +281,180 @@ namespace Oloraculo.Web.Services
             };
         }
 
+        private static string RationaleText(
+            MatchPrediction prediction,
+            string fixtureId,
+            IReadOnlyDictionary<string, IReadOnlyList<AvailabilityClaim>>? availabilityClaimsByFixture)
+        {
+            var lines = new List<string>
+            {
+                $"Model: {ModelText(prediction)}"
+            };
+
+            var signals = SignalsText(prediction);
+            if (!string.IsNullOrWhiteSpace(signals))
+                lines.Add($"Signals: {signals}");
+
+            var availability = AvailabilityText(fixtureId, availabilityClaimsByFixture);
+            if (!string.IsNullOrWhiteSpace(availability))
+                lines.Add($"Bajas: {availability}");
+
+            var missing = LimitedList(prediction.FeaturesMissing, maxItems: 3, maxItemLength: 70);
+            if (!string.IsNullOrWhiteSpace(missing))
+                lines.Add($"Missing: {missing}");
+
+            return string.Join("<br>", lines.Select(line => SanitizeCellSegment(line, maxLength: 220)));
+        }
+
+        private static string ModelText(MatchPrediction prediction)
+        {
+            var selectedModel = prediction.Sources
+                .FirstOrDefault(source =>
+                    string.Equals(source.Name, "model ladder", StringComparison.OrdinalIgnoreCase) &&
+                    !string.IsNullOrWhiteSpace(source.Notes))
+                ?.Notes;
+
+            if (!string.IsNullOrWhiteSpace(selectedModel) &&
+                !string.Equals(selectedModel, prediction.PredictorName, StringComparison.Ordinal))
+            {
+                return $"{prediction.PredictorName} ({selectedModel})";
+            }
+
+            return prediction.PredictorName;
+        }
+
+        private static string SignalsText(MatchPrediction prediction)
+        {
+            var signals = new List<string>();
+            signals.AddRange(prediction.FeaturesUsed);
+            signals.AddRange(prediction.Drivers.Where(IsSignalDriver));
+            return LimitedList(signals, maxItems: 4, maxItemLength: 90);
+        }
+
+        //ToDo: this sucks, either drivers should be a richer type, or the predictor should provide a rationale text
+        private static bool IsSignalDriver(string driver)
+        {
+            var normalized = FlattenWhitespace(driver);
+            return !string.IsNullOrWhiteSpace(normalized) &&
+                !normalized.StartsWith("Seleccionó ", StringComparison.OrdinalIgnoreCase) &&
+                !normalized.StartsWith("Omitió ", StringComparison.OrdinalIgnoreCase) &&
+                !string.Equals(normalized, "No se aplicó ajuste de contexto", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static string AvailabilityText(
+            string fixtureId,
+            IReadOnlyDictionary<string, IReadOnlyList<AvailabilityClaim>>? availabilityClaimsByFixture)
+        {
+            if (availabilityClaimsByFixture is null ||
+                !availabilityClaimsByFixture.TryGetValue(fixtureId, out var claims))
+            {
+                return "";
+            }
+
+            return LimitedList(
+                claims
+                    .Where(claim => claim.AffectsPrediction)
+                    .OrderBy(claim => claim.TeamName)
+                    .ThenBy(claim => claim.Player)
+                    .Select(AvailabilityClaimText),
+                maxItems: 3,
+                maxItemLength: 80);
+        }
+
+        private static string AvailabilityClaimText(AvailabilityClaim claim)
+        {
+            var team = FirstNonEmpty(claim.TeamName, claim.TeamId) ?? "Team";
+            return $"{team}: {claim.Player} ({AvailabilityStatusText(claim.Status)})";
+        }
+
+        private static int AvailabilitySort(AvailabilityClaim claim)
+        {
+            if (claim.AffectsPrediction)
+                return 0;
+
+            return claim.Status switch
+            {
+                AvailabilityClaimStatus.ConfirmedOutInjury or
+                    AvailabilityClaimStatus.ConfirmedOutIllness or
+                    AvailabilityClaimStatus.ConfirmedOutSuspension or
+                    AvailabilityClaimStatus.ConfirmedOutOther => 1,
+                AvailabilityClaimStatus.Doubtful or AvailabilityClaimStatus.FitnessConcern => 2,
+                AvailabilityClaimStatus.Rumor => 3,
+                AvailabilityClaimStatus.Available => 4,
+                _ => 5
+            };
+        }
+
+        private static string AvailabilityStatusText(AvailabilityClaimStatus status) => status switch
+        {
+            AvailabilityClaimStatus.ConfirmedOutInjury => "injury",
+            AvailabilityClaimStatus.ConfirmedOutIllness => "illness",
+            AvailabilityClaimStatus.ConfirmedOutSuspension => "suspension",
+            AvailabilityClaimStatus.ConfirmedOutOther => "out",
+            AvailabilityClaimStatus.Doubtful => "doubtful",
+            AvailabilityClaimStatus.FitnessConcern => "fitness",
+            AvailabilityClaimStatus.Rumor => "rumor",
+            AvailabilityClaimStatus.Available => "available",
+            AvailabilityClaimStatus.NotRelevant => "not relevant",
+            _ => status.ToString()
+        };
+
+        private static string LimitedList(IEnumerable<string> values, int maxItems, int maxItemLength)
+        {
+            var items = values
+                .Select(value => PlainSegment(value, maxItemLength))
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Distinct(StringComparer.Ordinal)
+                .ToList();
+            if (items.Count == 0)
+                return "";
+
+            var visible = items.Take(maxItems).ToList();
+            if (items.Count > maxItems)
+                visible.Add($"+{items.Count - maxItems} more");
+
+            return string.Join(", ", visible);
+        }
+
+        private static string PlainSegment(string value, int maxLength)
+        {
+            var flattened = FlattenWhitespace(value);
+            if (flattened.Length <= maxLength)
+                return flattened;
+
+            return flattened[..Math.Max(0, maxLength - 3)].TrimEnd() + "...";
+        }
+
+        private static string SanitizeCellSegment(string value, int maxLength)
+        {
+            var capped = PlainSegment(value, maxLength);
+            return WebUtility.HtmlEncode(capped).Replace("|", "&#124;");
+        }
+
+        private static string FlattenWhitespace(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return "";
+
+            var builder = new StringBuilder(value.Length);
+            var previousWasWhitespace = false;
+            foreach (var character in value)
+            {
+                if (char.IsWhiteSpace(character))
+                {
+                    if (!previousWasWhitespace && builder.Length > 0)
+                        builder.Append(' ');
+                    previousWasWhitespace = true;
+                    continue;
+                }
+
+                builder.Append(character);
+                previousWasWhitespace = false;
+            }
+
+            return builder.ToString().Trim();
+        }
+
         private static string StatusText(Fixture fixture)
         {
             if (fixture.IsPlayed)
@@ -271,6 +480,9 @@ namespace Oloraculo.Web.Services
 
         private static string Percent(double value, int digits) =>
             value.ToString($"P{digits}", CultureInfo.InvariantCulture);
+
+        private static string? FirstNonEmpty(params string?[] values) =>
+            values.FirstOrDefault(value => !string.IsNullOrWhiteSpace(value));
 
         private static string Escape(string value) => WebUtility.HtmlEncode(value);
     }
