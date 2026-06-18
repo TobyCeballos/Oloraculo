@@ -9,26 +9,26 @@ _A medida que se recibe nueva información y se juegan partidos reales, el Olor�
 
 ### Torneo
 
-_Generado 2026-06-17 22:11 UTC a través de 10,000 simulaciones._
+_Generado 2026-06-18 03:07 UTC a través de 10,000 simulaciones._
 
 | Team | Group | Qualify | QF | SF | Final | Champion |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/ar.svg" width="18" alt=""> Argentina | J | 100 % | 65 % | 51 % | 36 % | **25.9 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/jp.svg" width="18" alt=""> Japan | F | 95 % | 43 % | 28 % | 17 % | **9.3 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/ma.svg" width="18" alt=""> Morocco | C | 93 % | 43 % | 28 % | 16 % | **9.1 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/es.svg" width="18" alt=""> Spain | H | 91 % | 39 % | 27 % | 16 % | **8.9 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/co.svg" width="18" alt=""> Colombia | K | 84 % | 41 % | 22 % | 12 % | **6.2 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/fr.svg" width="18" alt=""> France | I | 98 % | 40 % | 22 % | 12 % | **5.3 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/ar.svg" width="18" alt=""> Argentina | J | 100 % | 64 % | 50 % | 36 % | **25.4 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/ma.svg" width="18" alt=""> Morocco | C | 93 % | 42 % | 28 % | 17 % | **9.4 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/jp.svg" width="18" alt=""> Japan | F | 95 % | 44 % | 29 % | 17 % | **9.3 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/es.svg" width="18" alt=""> Spain | H | 91 % | 38 % | 27 % | 17 % | **9.0 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/co.svg" width="18" alt=""> Colombia | K | 84 % | 41 % | 21 % | 12 % | **6.1 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/fr.svg" width="18" alt=""> France | I | 98 % | 40 % | 21 % | 11 % | **5.4 %** |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-eng.svg" width="18" alt=""> England | L | 99 % | 40 % | 22 % | 10 % | **5.2 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/br.svg" width="18" alt=""> Brazil | C | 93 % | 32 % | 18 % | 9 % | **3.8 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/pt.svg" width="18" alt=""> Portugal | K | 73 % | 29 % | 14 % | 7 % | **3.0 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/de.svg" width="18" alt=""> Germany | E | 99 % | 32 % | 16 % | 7 % | **2.8 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/au.svg" width="18" alt=""> Australia | D | 97 % | 30 % | 14 % | 6 % | **2.5 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/nl.svg" width="18" alt=""> Netherlands | F | 91 % | 27 % | 14 % | 6 % | **2.4 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/no.svg" width="18" alt=""> Norway | I | 96 % | 26 % | 11 % | 5 % | **1.9 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/ec.svg" width="18" alt=""> Ecuador | E | 73 % | 20 % | 9 % | 4 % | **1.6 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/mx.svg" width="18" alt=""> Mexico | A | 98 % | 24 % | 10 % | 4 % | **1.4 %** |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/at.svg" width="18" alt=""> Austria | J | 93 % | 21 % | 10 % | 4 % | **1.2 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/br.svg" width="18" alt=""> Brazil | C | 92 % | 31 % | 17 % | 8 % | **3.7 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/pt.svg" width="18" alt=""> Portugal | K | 73 % | 30 % | 15 % | 7 % | **3.6 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/de.svg" width="18" alt=""> Germany | E | 99 % | 32 % | 16 % | 7 % | **3.2 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/au.svg" width="18" alt=""> Australia | D | 97 % | 30 % | 14 % | 7 % | **2.6 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/nl.svg" width="18" alt=""> Netherlands | F | 91 % | 26 % | 13 % | 6 % | **2.4 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/ec.svg" width="18" alt=""> Ecuador | E | 73 % | 21 % | 10 % | 4 % | **1.6 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/no.svg" width="18" alt=""> Norway | I | 96 % | 25 % | 11 % | 4 % | **1.5 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/be.svg" width="18" alt=""> Belgium | G | 75 % | 19 % | 8 % | 3 % | **1.3 %** |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/mx.svg" width="18" alt=""> Mexico | A | 97 % | 24 % | 10 % | 4 % | **1.2 %** |
 
 ### Grupos
 
@@ -68,8 +68,8 @@ _Generado 2026-06-17 22:11 UTC a través de 10,000 simulaciones._
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/br.svg" width="18" alt=""> Brazil vs <img src="Oloraculo.Web/wwwroot/flags/4x3/ma.svg" width="18" alt=""> Morocco | FT | **1-1** <br><sub>Prediction: 1-1</sub> | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-1 | 40 % | 27 % | 33 % |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/ht.svg" width="18" alt=""> Haiti vs <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-sct.svg" width="18" alt=""> Scotland | FT | **0-1** <br><sub>Prediction: 1-2</sub> | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-1 | 34 % | 25 % | 40 % |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/ma.svg" width="18" alt=""> Morocco vs <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-sct.svg" width="18" alt=""> Scotland | Jun 19 22:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-0 | 62 % | 25 % | 13 % |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/br.svg" width="18" alt=""> Brazil vs <img src="Oloraculo.Web/wwwroot/flags/4x3/ht.svg" width="18" alt=""> Haiti | Jun 20 00:30 UTC | 3-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 2-0 | 72 % | 16 % | 12 % |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/br.svg" width="18" alt=""> Brazil vs <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-sct.svg" width="18" alt=""> Scotland | Jun 24 22:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 2-1 | 63 % | 20 % | 17 % |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/br.svg" width="18" alt=""> Brazil vs <img src="Oloraculo.Web/wwwroot/flags/4x3/ht.svg" width="18" alt=""> Haiti | Jun 20 00:30 UTC | 2-1 | Model: Or&#225;culo final (Goles + contexto reciente)<br>Signals: Modelo de goles, Disponibilidad de jugadores, Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, +3 more<br>Missing: alineaciones, cuotas<br>Bajas: Brazil: Wesley Fran&#231;a (out) | 71 % | 17 % | 12 % |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/br.svg" width="18" alt=""> Brazil vs <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-sct.svg" width="18" alt=""> Scotland | Jun 24 22:00 UTC | 2-1 | Model: Or&#225;culo final (Goles + contexto reciente)<br>Signals: Modelo de goles, Disponibilidad de jugadores, Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, +3 more<br>Missing: alineaciones, cuotas<br>Bajas: Brazil: Wesley Fran&#231;a (out) | 62 % | 21 % | 18 % |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/ma.svg" width="18" alt=""> Morocco vs <img src="Oloraculo.Web/wwwroot/flags/4x3/ht.svg" width="18" alt=""> Haiti | Jun 24 22:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-0 | 71 % | 20 % | 9 % |
 
 </details>
@@ -180,7 +180,7 @@ _Generado 2026-06-17 22:11 UTC a través de 10,000 simulaciones._
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/pt.svg" width="18" alt=""> Portugal vs <img src="Oloraculo.Web/wwwroot/flags/4x3/cd.svg" width="18" alt=""> Congo DR | FT | **1-1** <br><sub>Prediction: 1-1</sub> | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-0 | 48 % | 30 % | 22 % |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/uz.svg" width="18" alt=""> Uzbekistan vs <img src="Oloraculo.Web/wwwroot/flags/4x3/co.svg" width="18" alt=""> Colombia | Jun 18 02:00 UTC | 1-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 0-1 | 20 % | 26 % | 54 % |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/pt.svg" width="18" alt=""> Portugal vs <img src="Oloraculo.Web/wwwroot/flags/4x3/uz.svg" width="18" alt=""> Uzbekistan | Jun 23 17:00 UTC | 1-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-0 | 49 % | 27 % | 23 % |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/cd.svg" width="18" alt=""> Congo DR vs <img src="Oloraculo.Web/wwwroot/flags/4x3/co.svg" width="18" alt=""> Colombia | Jun 24 02:00 UTC | 1-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 0-1 | 19 % | 29 % | 51 % |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/cd.svg" width="18" alt=""> Congo DR vs <img src="Oloraculo.Web/wwwroot/flags/4x3/co.svg" width="18" alt=""> Colombia | Jun 24 02:00 UTC | 1-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 0-1 | 19 % | 30 % | 51 % |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/cd.svg" width="18" alt=""> Congo DR vs <img src="Oloraculo.Web/wwwroot/flags/4x3/uz.svg" width="18" alt=""> Uzbekistan | Jun 27 23:30 UTC | 1-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 0-0 | 30 % | 38 % | 32 % |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/pt.svg" width="18" alt=""> Portugal vs <img src="Oloraculo.Web/wwwroot/flags/4x3/co.svg" width="18" alt=""> Colombia | Jun 27 23:30 UTC | 1-2 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-1 | 33 % | 25 % | 43 % |
 
@@ -192,11 +192,11 @@ _Generado 2026-06-17 22:11 UTC a través de 10,000 simulaciones._
 | Match | Status | Result / Pick | Why | H | D | A |
 | --- | --- | --- | --- | ---: | ---: | ---: |
 | <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-eng.svg" width="18" alt=""> England vs <img src="Oloraculo.Web/wwwroot/flags/4x3/hr.svg" width="18" alt=""> Croatia | FT | **4-2** <br><sub>Prediction: 1-1</sub> | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-0 | 48 % | 28 % | 24 % |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/gh.svg" width="18" alt=""> Ghana vs <img src="Oloraculo.Web/wwwroot/flags/4x3/pa.svg" width="18" alt=""> Panama | Jun 17 23:00 UTC | 1-2 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-1 | 30 % | 25 % | 45 % |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-eng.svg" width="18" alt=""> England vs <img src="Oloraculo.Web/wwwroot/flags/4x3/gh.svg" width="18" alt=""> Ghana | Jun 23 20:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 2-0 | 72 % | 18 % | 10 % |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/hr.svg" width="18" alt=""> Croatia vs <img src="Oloraculo.Web/wwwroot/flags/4x3/pa.svg" width="18" alt=""> Panama | Jun 23 23:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-1 | 53 % | 23 % | 23 % |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/hr.svg" width="18" alt=""> Croatia vs <img src="Oloraculo.Web/wwwroot/flags/4x3/gh.svg" width="18" alt=""> Ghana | Jun 27 21:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-0 | 60 % | 23 % | 18 % |
-| <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-eng.svg" width="18" alt=""> England vs <img src="Oloraculo.Web/wwwroot/flags/4x3/pa.svg" width="18" alt=""> Panama | Jun 27 21:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 2-0 | 67 % | 20 % | 13 % |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/gh.svg" width="18" alt=""> Ghana vs <img src="Oloraculo.Web/wwwroot/flags/4x3/pa.svg" width="18" alt=""> Panama | FT | **1-0** <br><sub>Prediction: 1-2</sub> | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-1 | 30 % | 25 % | 45 % |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-eng.svg" width="18" alt=""> England vs <img src="Oloraculo.Web/wwwroot/flags/4x3/gh.svg" width="18" alt=""> Ghana | Jun 23 20:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 2-0 | 71 % | 19 % | 10 % |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/hr.svg" width="18" alt=""> Croatia vs <img src="Oloraculo.Web/wwwroot/flags/4x3/pa.svg" width="18" alt=""> Panama | Jun 23 23:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-1 | 54 % | 23 % | 23 % |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/hr.svg" width="18" alt=""> Croatia vs <img src="Oloraculo.Web/wwwroot/flags/4x3/gh.svg" width="18" alt=""> Ghana | Jun 27 21:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 1-0 | 58 % | 23 % | 19 % |
+| <img src="Oloraculo.Web/wwwroot/flags/4x3/gb-eng.svg" width="18" alt=""> England vs <img src="Oloraculo.Web/wwwroot/flags/4x3/pa.svg" width="18" alt=""> Panama | Jun 27 21:00 UTC | 2-1 | Model: Or&#225;culo final (Modelo de goles (Poisson))<br>Signals: Fuerza de ataque ajustada por rival, Vulnerabilidad defensiva ajustada por rival, Grilla de marcadores Dixon-Coles, Marcador m&#225;s probable: 2-0 | 68 % | 20 % | 13 % |
 
 </details>
 <!-- oloraculo:snapshots:end -->
