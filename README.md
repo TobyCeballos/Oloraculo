@@ -1,7 +1,3 @@
-# Holi.
-En este repo vas a encontrar todo el código del proyecto Oloráculo: un oráculo del mundial que funciona como huele. 
-
-## [Video con lore y explicación](https://youtu.be/cvPeS0qAikw?si=yHv5wKkk5lqgYXhn)
 
 <!-- oloraculo:snapshots:start -->
 ## Predicciones más recientes
